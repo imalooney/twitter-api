@@ -4,7 +4,7 @@ require 'twitter'
 
 module UserComparer
   class User
-  	attr_reader :username
+  	attr_reader :username, :followers
 
   	def initialize(username)
   		@username = username
@@ -18,7 +18,7 @@ module UserComparer
 		    config.access_token_secret = ENV['OAUTH_TOKEN_SECRET']
 	  	end
 
-	  	client.user(@username)followers_count
+	  	client.user(@username).followers_count
 		end
   end
 
@@ -30,7 +30,13 @@ module UserComparer
   	end
 
   	def compare
-
+  		if @user1.followers > @user2.followers
+  			@user1.username
+  		elsif @user2.followers > @user1.followers
+  			@user2.username
+  		else
+  			puts "You have the same amount of followers."
+  		end
   	end
   end
 end
